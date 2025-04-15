@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stylelogin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="... integrity hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Home</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
+    <script src="scriptCategorias.js"></script>
+
     <style>
         body {
             font-family: sans-serif;
@@ -57,7 +57,7 @@
             display: block; /* Remove qualquer espaçamento inline */
             margin: 0 auto; /* Centraliza a logo dentro do container */
         }
-       
+
         .usuario-destaque {
             position: absolute;
             top: 10px;
@@ -78,7 +78,6 @@
             padding-top: 80px; /* Adiciona padding para evitar que o conteúdo fique atrás do cabeçalho fixo (ajuste conforme a altura do header) */
             text-align: center; /* Centraliza o texto abaixo da logo */
             padding: 110px;
-            max-width: 600px; /* Define a largura máxima da área principal da página */
         }
 
         .forum-info {
@@ -147,28 +146,15 @@
             background-color: #ccc;
         }
 
-
- /* Formatação da pesquisa */
-
-            /* Estilo para o input de pesquisa para torná-lo um container de posicionamento */
-            input[type="pesquisa"]#campoPesquisa {
-            position: relative;
-            padding-right: 25px; /* Adiciona um padding à direita para espaço do ícone */
+        .categoria-button:active {
+            background-color: #003e5a; /* A cor quando ativo */
+            color: #ddd; /* A cor do texto quando ativo */
         }
 
-          /* Estilo para o ícone de limpar */
-        .clear-icon {
-            position: absolute;
-            /* Tentando posicionar no canto direito do input */
-            left: 72%;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #002d42;
-            cursor: pointer;
-            display: none;
-            z-index: 3;
+        .categoria-button-ativo {
+            background-color: #003e5a; /* A cor quando ativo */
+            color: #ddd; /* A cor do texto quando ativo */
         }
-
 
         .ultimas-postagens {
             padding: 20px;
@@ -233,19 +219,10 @@
         <div class="categorias">
             <h2>Categorias</h2>
             <div class="categorias-buttons">
-                <a href="#" class="categoria-button">TI</a>
-                <a href="#" class="categoria-button">Processos Internos</a>
-                <a href="#" class="categoria-button">DepartamentoPessoal</a>
-                <a href="#" class="categoria-button">Happy Hour</a>
-            </div>
-        </div>
-
-        <div class="input-group">
-            <div class="input-with-icon">
-                <i class="fa fa-search icon" aria-hidden="true"></i>
-                <input type="pesquisa" required placeholder="Encontre as perguntas já feitas" id="campoPesquisa">
-                <i class="fa fa-times-circle clear-icon"></i>
-                <button type="button" class="btn-pesquisa">Pesquisar</button>
+                <a href="#" class="categoria-button" data-categoria="ti">TI</a>
+                <a href="#" class="categoria-button" data-categoria="processos">Processos Internos</a>
+                <a href="#" class="categoria-button" data-categoria="dp">Departamento Pessoal</a>
+                <a href="#" class="categoria-button" data-categoria="happyhour">Happy Hour</a>
             </div>
         </div>
 
