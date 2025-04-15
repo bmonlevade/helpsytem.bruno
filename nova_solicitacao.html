@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #003e5a;
+            color: #fff;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza a logo inicialmente */
+        }
+
+        .logo {
+            max-height: 100px;
+            width: auto;
+            display: block;
+            margin: 0 auto; /* Centraliza a logo dentro do container */
+        }
+
+        .usuario-info-container {
+            position: absolute;
+            top: 15px;
+            right: 40px;
+        }
+
+        .usuario-info {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            white-space: nowrap;
+            max-width: none;
+            min-width: 80px;
+            font-size: 0.9em;
+            text-align: right;
+        }
+
+        .content {
+            margin-top: 150px;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        /* Aumentando a largura do campo de título */
+        .form-group input[type="text"]#titulo {
+            width: 100%; /* Ajuste este valor conforme a largura desejada */
+            /* Você também pode usar uma porcentagem diferente ou um valor fixo (em px, em, etc.) */
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+        }
+
+        /* Estilos para o placeholder do input de texto */
+        input::placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        /* Estilos para o placeholder da textarea */
+        textarea::placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        /* Prefixos para compatibilidade com navegadores (placeholder) */
+        input::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+        textarea::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        input::-moz-placeholder { /* Firefox 19+ */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Firefox padrão é 0.54 */
+        }
+        textarea::-moz-placeholder { /* Firefox 19+ */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Firefox padrão é 0.54 */
+        }
+
+        input:-ms-input-placeholder { /* IE 10+ */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+        textarea:-ms-input-placeholder { /* IE 10+ */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        input::-ms-placeholder { /* Microsoft Edge */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Edge padrão é 0.6 */
+        }
+        textarea::-ms-placeholder { /* Microsoft Edge */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Edge padrão é 0.6 */
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .button {
+            background-color: #003e5a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #002d42;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+        </div>
+        <div class="usuario-info-container">
+            <span id="nomeUsuarioHeader" class="usuario-info">Nome Completo Do Usuário</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <h1>Nova Solicitação</h1>
+        <form id="formSolicitacao">
+            <div class="form-group">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required placeholder="Informe aqui seu título">
+            </div>
+            <div class="form-group">
+                <label for="setor">Categoria:</label>
+                <select id="setor" name="setor" required>
+                    <option value="" disabled selected>Selecione o setor</option>
+                    <option value="ti">TI</option>
+                    <option value="processos">Processos Internos</option>
+                    <option value="dp">Departamento Pessoal</option>
+                    <option value="happyhour">Happy Hour</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="solicitacao">Solicitação:</label>
+                <textarea id="solicitacao" name="solicitacao" required placeholder="Informe aqui sua solicitação"></textarea>
+            </div>
+            <div class="buttons-container">
+                <button type="submit" class="button">Enviar</button>
+                <button type="button" class="button" id="cancelarSolicitacao">Cancelar</button>
+                <button type="reset" class="button">Limpar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const nomeUsuario = localStorage.getItem('nomeUsuario');
+        const nomeUsuarioHeader = document.getElementById('nomeUsuarioHeader');
+        const form = document.getElementById('formSolicitacao');
+        const cancelarButton = document.getElementById('cancelarSolicitacao');
+
+        if (nomeUsuario && nomeUsuarioHeader) {
+            nomeUsuarioHeader.textContent = nomeUsuario;
+        } else if (nomeUsuarioHeader) {
+            nomeUsuarioHeader.textContent = 'Nome Completo Do Usuário'; // Fallback para teste
+        }
+
+        // Inicialize o Parse com suas chaves do Back4App
+        Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+        Parse.serverURL = 'https://parseapi.back4app.com/';
+
+        const enviarButton = form.querySelector('button[type="submit"]');
+
+        enviarButton.addEventListener('click', function(event) {
+            event.preventDefault(); // Evita o envio padrão do formulário
+
+            const titulo = document.getElementById('titulo').value.trim();
+            const categoria = document.getElementById('setor').value;
+            const solicitacaoConteudo = document.getElementById('solicitacao').value.trim(); // Alterado o nome da variável para refletir o nome da coluna
+
+            if (!titulo || categoria === "" || !solicitacaoConteudo) {
+                let camposVazios = [];
+                if (!titulo) camposVazios.push("Título");
+                if (categoria === "") camposVazios.push("Categoria");
+                if (!solicitacaoConteudo) camposVazios.push("Solicitação");
+
+                alert("Você precisa preencher os campos: " + camposVazios.join(", "));
+                return; // Impede a execução do código de salvamento
+            }
+
+            // Crie um novo objeto Parse
+            const Solicitacao = Parse.Object.extend("solicitacao");
+            const novaSolicitacao = new Solicitacao();
+
+            // Defina os valores das colunas
+            novaSolicitacao.set("titulo", titulo);
+            novaSolicitacao.set("categoria", categoria);
+            novaSolicitacao.set("solicitacao_conteudo", solicitacaoConteudo); // Use o nome correto da coluna
+            if (nomeUsuario) {
+                novaSolicitacao.set("usuario", nomeUsuario);
+            }
+
+            // Salve o objeto no Back4App
+            novaSolicitacao.save().then((solicitacaoSalva) => {
+                alert('Solicitação criada com sucesso!');
+                form.reset(); // Limpa o formulário após o sucesso
+                console.log('Solicitação salva:', solicitacaoSalva);
+                // Redireciona para a página home.html
+                window.location.href = 'home.html';
+            }).catch((error) => {
+                alert('Erro ao enviar a solicitação: ' + error.message);
+                console.error('Erro ao salvar a solicitação:', error);
+            });
+        });
+
+        cancelarButton.addEventListener('click', function() {
+            alert('Solicitação cancelada!');
+            form.reset(); // Limpa os campos do formulário
+            window.location.href = 'home.html'; // Redireciona para home.html
+            // Não precisamos de nenhuma lógica de salvamento aqui, pois o cancelamento não deve salvar nada.
+        });
+
+        // O botão de "Limpar" (type="reset") já tem o comportamento padrão de limpar o formulário.
+    });
+    </script>
+</body>
+</html>

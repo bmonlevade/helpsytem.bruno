@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .user-info {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-weight: bold;
+        }
+
+        .resposta-count {
+            color: #777;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        .nova-resposta {
+            color: green;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .header {
+            background-color: #003e5a;
+            color: #fff;
+            padding: 10px 0; /* Reduzi o padding vertical */
+            text-align: center; /* Centraliza o conteúdo dentro do header */
+            position: fixed; /* Fixa o cabeçalho no topo */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100; /* Garante que o cabeçalho fique acima de outros elementos */
+        }
+
+        .logo-container {
+            display: inline-block; /* Permite centralizar o container da logo */
+        }
+
+        .logo {
+            max-height: 100px; /* Ajuste a altura máxima da logo conforme necessário */
+            width: auto;
+            display: block; /* Remove qualquer espaçamento inline */
+            margin: 0 auto; /* Centraliza a logo dentro do container */
+        }
+
+        .usuario-destaque {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-weight: bold;
+            color: #fff;
+            padding: 8px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .usuario-destaque:hover {
+            opacity: 0.8;
+        }
+
+        .content {
+            padding-top: 80px; /* Adiciona padding para evitar que o conteúdo fique atrás do cabeçalho fixo (ajuste conforme a altura do header) */
+            text-align: center; /* Centraliza o texto abaixo da logo */
+            padding: 110px;
+        }
+
+        .forum-info {
+            margin-top: 50px; /* Ajuste este valor conforme a distância desejada */
+            text-align: center;
+        }
+
+        .forum-info h1 {
+            font-size: 2em;
+            color: #003e5a;
+            margin-bottom: 10px;
+        }
+
+        .forum-info p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .nova-solicitacao-button {
+            display: inline-block; /* Permite centralizar como um bloco */
+            padding: 15px 30px;
+            background-color: #003e5a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 20px; /* Adiciona um espaço acima do botão */
+        }
+
+        .nova-solicitacao-button:hover {
+            background-color: #002d42;
+        }
+
+        .categorias {
+            padding: 20px;
+            text-align: center; /* Centraliza o título e os botões */
+        }
+
+        .categorias h2 {
+            color: #003e5a;
+            margin-bottom: 10px;
+        }
+
+        .categorias-buttons {
+            display: flex;
+            justify-content: center; /* Centraliza os botões horizontalmente */
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .categoria-button {
+            background-color: #ddd;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            text-decoration: none;
+        }
+
+        .categoria-button:hover {
+            background-color: #ccc;
+        }
+
+        .ultimas-postagens {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin: 20px auto; /* Centraliza o bloco */
+            max-width: 600px; /* Define uma largura máxima para o bloco */
+        }
+
+        .ultimas-postagens h2 {
+            color: #003e5a;
+            margin-bottom: 10px;
+        }
+
+        .ultimas-postagens ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .ultimas-postagens li {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ultimas-postagens li:last-child {
+            border-bottom: none;
+        }
+
+        .ultimas-postagens a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .ultimas-postagens a:hover {
+            color: #003e5a;
+        }
+
+        .ultimas-postagens span {
+            color: #777;
+            font-size: 0.8em;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="imagens/logo3.png" alt="Logo da Empresa" class="logo">
+        </div>
+        <a id="linkPerfil" href="perfil.html" class="usuario-destaque"></a>
+    </div>
+
+    <div class="content">
+        <div class="forum-info">
+            <h1>Fórum Colaborativo</h1>
+            <p>Funcionários podem se ajudar, tirando dúvidas sobre processos internos, ferramentas, benefícios e mais.</p>
+            <a href="nova_solicitacao.html" class="nova-solicitacao-button">+ Nova Solicitação</a>
+        </div>
+
+        <div class="categorias">
+            <h2>Categorias</h2>
+            <div class="categorias-buttons">
+                <a href="#" class="categoria-button">TI</a>
+                <a href="#" class="categoria-button">Processos Internos</a>
+                <a href="#" class="categoria-button">DepartamentoPessoal</a>
+                <a href="#" class="categoria-button">Happy Hour</a>
+            </div>
+        </div>
+
+        <div class="ultimas-postagens">
+            <h2>Últimas Postagens</h2>
+            <ul id="listaUltimasPostagens">
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nomeUsuario = localStorage.getItem('nomeUsuario');
+            const linkPerfil = document.getElementById('linkPerfil');
+            const listaUltimasPostagens = document.getElementById('listaUltimasPostagens');
+
+            if (nomeUsuario && linkPerfil) {
+                linkPerfil.textContent = nomeUsuario;
+                linkPerfil.title = 'Perfil de ' + nomeUsuario;
+            }
+
+            Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+            Parse.serverURL = 'https://parseapi.back4app.com/';
+
+            async function buscarUltimasSolicitacoes() {
+                const Solicitacao = Parse.Object.extend("solicitacao");
+                const query = new Parse.Query(Solicitacao);
+                query.descending("createdAt");
+                query.limit(10);
+
+                try {
+                    const results = await query.find();
+                    listaUltimasPostagens.innerHTML = '';
+
+                    const currentUser = Parse.User.current();
+                    const currentUserId = currentUser ? currentUser.id : null;
+
+                    if (results.length > 0) {
+                        results.forEach(solicitacao => {
+                            const titulo = solicitacao.get("titulo");
+                            const nomeCriador = solicitacao.get("usuario");
+                            const objectId = solicitacao.id;
+                            const hasnovaresposta = solicitacao.get("hasnovaresposta") || [];
+                            const temNovaRespostaParaUsuario = currentUserId && hasnovaresposta.includes(currentUserId);
+
+                            const listItem = document.createElement('li');
+                            const link = document.createElement('a');
+                            link.href = `resposta.html?id=${objectId}`;
+                            link.textContent = titulo;
+
+                            const spanCriador = document.createElement('span');
+                            spanCriador.textContent = `${nomeCriador}`;
+                            spanCriador.style.color = '#777';
+                            spanCriador.style.fontSize = '0.8em';
+                            spanCriador.style.marginLeft = '5px';
+
+                            listItem.appendChild(link);
+                            listItem.appendChild(spanCriador);
+
+                            if (temNovaRespostaParaUsuario) {
+                                const novaRespostaSpan = document.createElement('span');
+                                novaRespostaSpan.classList.add('nova-resposta');
+                                novaRespostaSpan.textContent = '(Nova Resposta)';
+                                listItem.appendChild(novaRespostaSpan);
+                            }
+
+                            listaUltimasPostagens.appendChild(listItem);
+                        });
+                    } else {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = 'Nenhuma solicitação encontrada.';
+                        listaUltimasPostagens.appendChild(listItem);
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar as últimas solicitações:", error);
+                    const listItem = document.createElement('li');
+                    listItem.textContent = 'Erro ao carregar as solicitações.';
+                    listaUltimasPostagens.appendChild(listItem);
+                }
+            }
+
+            buscarUltimasSolicitacoes();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,130 @@
+body {
+    background-color: #f0f2f5; /* Um tom de fundo claro como na imagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: auto; /* Ajustar a altura automaticamente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; /* Adicionar um pouco de padding ao redor do container */
+}
+
+.login-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Garante que o conteúdo interno seja centralizado */
+    width: 350px;
+    max-width: 90%;
+}
+.logo-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.logo-container img {
+    width: auto; /* Ajusta a largura automaticamente com base na imagem */
+    max-width: 300px; /* Define uma largura máxima para não ficar muito grande */
+    height: auto; /* Mantém a proporção da imagem */
+    border-radius: 0; /* Remove qualquer arredondamento */
+    object-fit: contain; /* Garante que toda a imagem seja visível sem cortar */
+    box-shadow: none; /* Remover a sombra da logo, se desejar */
+}
+
+h1 {
+    color: #004F5A; /* Cor do título */
+    margin-bottom: 25px;
+    font-size: 24px; /* Ajustar o tamanho da fonte do título */
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #004F5A; /* Cor das labels */
+    font-size: 14px;
+    font-weight: bold; /* Adicionar negrito à label */
+}
+
+.input-with-icon {
+    position: relative; /* Cria um contexto para posicionar o ícone */
+    display: flex; /* Usar flexbox para alinhar ícone e input */
+    align-items: center; /* Alinhar verticalmente */
+}
+
+.input-with-icon .icon {
+    position: absolute;
+    left: 10px; /* Espaçamento da borda esquerda */
+    color: #999; /* Cor do ícone (você pode alterar se quiser #004F5A) */
+    font-size: 16px; /* Tamanho do ícone */
+}
+
+.input-with-icon input[type="text"],
+.input-with-icon input[type="password"] {
+    padding-left: 35px; /* Adiciona espaço para o ícone não sobrepor o texto */
+    width: calc(200% - 35px); /* Ajusta a largura considerando o padding */
+    padding-top: 10px; /* Manter o padding vertical */
+    padding-bottom: 10px; /* Manter o padding vertical */
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-top: 5px;
+    color: #004F5A; /* Cor do texto digitado dentro dos campos */
+}
+
+.input-with-icon input::placeholder {
+    color: #004F5A; /* Cor do texto do placeholder */
+    opacity: 0.7; /* Adicionar um pouco de transparência para diferenciar do texto digitado */
+}
+
+.erro-login {
+    color: red; /* Cor vermelha para indicar erro */
+    margin-top: 10px; /* Espaçamento acima da mensagem de erro */
+    font-size: 0.9em; /* Tamanho da fonte um pouco menor */
+    text-align: center; /* Centralizar a mensagem de erro */
+    display: none; /* Inicialmente escondida, será mostrada pelo JavaScript */
+}
+
+.btn-entrar {
+    background-color: #003e5a; /* Cor de fundo do botão */
+    color: white;
+    padding: 10px 20px; /* Reduzir o padding horizontal */
+    border: none;
+    border-radius: 8px; /* Ajustar o valor para o arredondamento desejado */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Manter a largura para preencher o container */
+    max-width: 370px; /* Adicionar uma largura máxima para não ficar excessivamente largo */
+    margin-top: 15px; /* Manter o espaçamento acima do botão */
+}
+
+.btn-entrar:hover {
+    background-color: #00363d; /* Um tom mais escuro para o hover */
+}
+
+.signup-link {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #004F5A; /* Nova cor do texto "Não tem uma conta?" */
+    text-align: center; /* Centralizar o link de cadastro */
+}
+
+.signup-link a {
+    color: #004F5A; /* Cor do link Cadastre-se */
+}

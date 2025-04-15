@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="... integrity hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="https://unpkg.com/parse/dist/parse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+            <div class="logo-container">
+                <img src="imagens/logo2.png" alt="Logo do Fórum">
+            </div>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="usuario"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope icon"></i>
+                        <input type="text" id="usuario" name="usuario" required placeholder="Seu email">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="senha"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock icon"></i>
+                        <input type="password" id="senha" name="senha" required placeholder="Sua senha">
+                    </div>
+                <button type="submit" class="btn-entrar">Entrar</button>
+            </form>
+            <p class="signup-link">Não tem uma conta? <a href="#">Cadastre-se</a></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

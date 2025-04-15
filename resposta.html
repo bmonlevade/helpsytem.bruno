@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responder Solicitação</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #003e5a;
+            color: #fff;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza a logo inicialmente */
+        }
+
+        .logo {
+            max-height: 100px;
+            width: auto;
+            display: block;
+            margin: 0 auto; /* Centraliza a logo dentro do container */
+        }
+
+        .usuario-info-container {
+            position: absolute;
+            top: 15px;
+            right: 40px;
+        }
+
+        .usuario-info {
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: bold;
+            white-space: nowrap;
+            max-width: none;
+            min-width: 80px;
+            font-size: 0.9em;
+            text-align: right;
+        }
+
+        .content {
+            margin-top: 180px; /* Aumentei o margin-top para dar espaço ao título e conteúdo da solicitação */
+            padding: 20px;
+        }
+
+        .solicitacao-info {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .solicitacao-info h2 {
+            margin-top: 0;
+            color: #003e5a;
+            margin-bottom: 5px;
+        }
+
+        .solicitacao-info p {
+            margin-bottom: 0;
+            color: #555;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
+
+        /* Aumentando a largura do campo de título */
+        .form-group input[type="text"]#titulo {
+            width: 100%; /* Ajuste este valor conforme a largura desejada */
+            /* Você também pode usar uma porcentagem diferente ou um valor fixo (em px, em, etc.) */
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+        }
+
+        /* Estilos para o placeholder do input de texto */
+        input::placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        /* Estilos para o placeholder da textarea */
+        textarea::placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        /* Prefixos para compatibilidade com navegadores (placeholder) */
+        input::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+        textarea::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        input::-moz-placeholder { /* Firefox 19+ */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Firefox padrão é 0.54 */
+        }
+        textarea::-moz-placeholder { /* Firefox 19+ */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Firefox padrão é 0.54 */
+        }
+
+        input:-ms-input-placeholder { /* IE 10+ */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+        textarea:-ms-input-placeholder { /* IE 10+ */
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        input::-ms-placeholder { /* Microsoft Edge */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Edge padrão é 0.6 */
+        }
+        textarea::-ms-placeholder { /* Microsoft Edge */
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1; /* Edge padrão é 0.6 */
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-start;
+        }
+
+        .button {
+            background-color: #003e5a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: #002d42;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+        </div>
+        <div class="usuario-info-container">
+            <span id="nomeUsuarioHeader" class="usuario-info">Nome Completo Do Usuário</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="solicitacao-info">
+            <h2 id="tituloSolicitacao">Título da Solicitação</h2>
+            <p id="conteudoSolicitacao">Conteúdo da solicitação selecionada.</p>
+        </div>
+
+        <h1>Responder Solicitação</h1>
+        <form id="formResposta">
+            <div class="form-group">
+                <label for="resposta">Resposta:</label>
+                <textarea id="resposta" name="resposta" required placeholder="Informe aqui sua resposta"></textarea>
+            </div>
+            <div class="buttons-container">
+                <button type="submit" class="button">Enviar</button>
+                <button type="button" class="button">Cancelar</button>
+                <button type="reset" class="button">Limpar</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const nomeUsuarioHeader = document.getElementById('nomeUsuarioHeader');
+            const tituloSolicitacaoElement = document.getElementById('tituloSolicitacao');
+            const conteudoSolicitacaoElement = document.getElementById('conteudoSolicitacao');
+            const formResposta = document.getElementById('formResposta');
+            const respostaInput = document.getElementById('resposta');
+            const urlParams = new URLSearchParams(window.location.search);
+            const solicitacaoId = urlParams.get('id');
+            const nomeUsuario = localStorage.getItem('nomeUsuario'); // Supondo que o nome do usuário esteja armazenado no localStorage
+
+            if (nomeUsuario && nomeUsuarioHeader) {
+                nomeUsuarioHeader.textContent = nomeUsuario;
+            } else if (nomeUsuarioHeader) {
+                nomeUsuarioHeader.textContent = 'Nome Completo Do Usuário'; // Fallback para teste
+            }
+
+            // Inicialize o Parse com suas chaves do Back4App
+            Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+            Parse.serverURL = 'https://parseapi.back4app.com/';
+
+            async function buscarSolicitacaoPorId(id) {
+                if (!id) {
+                    tituloSolicitacaoElement.textContent = 'ID da Solicitação Inválido';
+                    conteudoSolicitacaoElement.textContent = 'Nenhuma solicitação foi selecionada corretamente.';
+                    return;
+                }
+
+                const Solicitacao = Parse.Object.extend("solicitacao");
+                const query = new Parse.Query(Solicitacao);
+
+                try {
+                    const solicitacao = await query.get(id);
+                    if (solicitacao) {
+                        tituloSolicitacaoElement.textContent = solicitacao.get("titulo");
+                        conteudoSolicitacaoElement.textContent = solicitacao.get("solicitacao_conteudo");
+                    } else {
+                        tituloSolicitacaoElement.textContent = 'Solicitação Não Encontrada';
+                        conteudoSolicitacaoElement.textContent = 'Não foi possível encontrar a solicitação com o ID fornecido.';
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar a solicitação:", error);
+                    tituloSolicitacaoElement.textContent = 'Erro ao Carregar Solicitação';
+                    conteudoSolicitacaoElement.textContent = 'Ocorreu um erro ao buscar os detalhes da solicitação.';
+                }
+            }
+
+            buscarSolicitacaoPorId(solicitacaoId);
+
+            formResposta.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            console.log('Formulário de resposta enviado!');
+
+            const conteudoResposta = respostaInput.value.trim();
+
+            if (!conteudoResposta) {
+                alert('Por favor, digite sua resposta.');
+                return;
+            }
+
+            if (!solicitacaoId) {
+                alert('Erro: ID da solicitação não encontrado.');
+                return;
+            }
+
+            try {
+                const Resposta = Parse.Object.extend("Respostas");
+                const novaResposta = new Resposta();
+                novaResposta.set("conteudo_resposta", conteudoResposta);
+
+                const Solicitacao = Parse.Object.extend("solicitacao");
+                const solicitacaoAlvo = Solicitacao.createWithoutData(solicitacaoId);
+                novaResposta.set("solicitacao", solicitacaoAlvo);
+                novaResposta.set("usuario", nomeUsuario);
+
+                const respostaSalva = await novaResposta.save();
+                console.log('Resposta salva com sucesso:', respostaSalva);
+                alert('Resposta enviada com sucesso!');
+
+                const currentUser = Parse.User.current();
+                console.log('Current User:', currentUser);
+
+                if (currentUser) {
+                    try {
+                        const solicitacaoParaAtualizar = await solicitacaoAlvo.fetch();
+                        console.log('Solicitação buscada para atualização:', solicitacaoParaAtualizar);
+
+                        let hasnovaresposta = solicitacaoParaAtualizar.get("hasnovaresposta") || [];
+                        console.log('Valor inicial de hasnovaresposta:', hasnovaresposta);
+
+                        const criadorId = solicitacaoParaAtualizar.get("objectIdDoCriador");
+                        console.log('ID do Criador:', criadorId);
+
+                        if (criadorId && criadorId !== currentUser.id && !hasnovaresposta.includes(criadorId)) {
+                            hasnovaresposta.push(criadorId);
+                            console.log('ID do criador adicionado:', hasnovaresposta);
+                        }
+
+                        if (!hasnovaresposta.includes(currentUser.id)) {
+                            hasnovaresposta.push(currentUser.id);
+                            console.log('ID do respondente adicionado:', hasnovaresposta);
+                        }
+
+                        solicitacaoParaAtualizar.set("hasnovaresposta", hasnovaresposta);
+                        await solicitacaoParaAtualizar.save();
+                        console.log('Campo hasnovaresposta atualizado:', solicitacaoParaAtualizar.get("hasnovaresposta"));
+
+                    } catch (error) {
+                        console.error('Erro ao buscar solicitação para atualizar:', error);
+                    }
+                }
+
+                window.location.href = 'home.html';
+
+            } catch (error) {
+                console.error('Erro ao salvar a resposta:', error);
+                alert('Ocorreu um erro ao enviar sua resposta. Por favor, tente novamente.');
+            }
+        });
+        });
+    </script>
+</body>
+</html>
