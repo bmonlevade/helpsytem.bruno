@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="https://unpkg.com/parse/dist/parse.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="login-box cadastro-box">
+            <div class="logo-container">
+                <img src="imagens/logo2.png" alt="Logo do Fórum">
+            </div>
+            <form id="cadastroForm">
+                <div class="input-group">
+                    <label for="nomeUsuarioCadastro"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user icon"></i>
+                        <input type="text" id="nomeUsuarioCadastro" name="nomeUsuarioCadastro" required placeholder="Nome de usuário">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="novoUsuario"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope icon"></i>
+                        <input type="email" id="novoUsuario" name="novoUsuario" required placeholder="Seu email">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="novaSenha"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock icon"></i>
+                        <input type="password" id="novaSenha" name="novaSenha" required placeholder="Sua senha">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="confirmarSenha"></label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock icon"></i>
+                        <input type="password" id="confirmarSenha" name="confirmarSenha" required placeholder="Confirmar sua senha">
+                    </div>
+                </div>
+                <button type="submit" class="btn-cadastrar">Cadastrar</button>
+            </form>
+            <p class="login-link">Já tem conta? <a href="login.html">Faça login</a>.</p>
+        </div>
+    </div>
+    <script src="scriptCadastro.js"></script>
+    </body>
+</html>

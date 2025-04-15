@@ -74,7 +74,8 @@ label {
 }
 
 .input-with-icon input[type="text"],
-.input-with-icon input[type="password"] {
+.input-with-icon input[type="password"],
+.input-with-icon input[type="email"] {
     padding-left: 35px; /* Adiciona espaço para o ícone não sobrepor o texto */
     width: calc(200% - 35px); /* Ajusta a largura considerando o padding */
     padding-top: 10px; /* Manter o padding vertical */
@@ -100,7 +101,8 @@ label {
     display: none; /* Inicialmente escondida, será mostrada pelo JavaScript */
 }
 
-.btn-entrar {
+.btn-entrar,
+.btn-cadastrar {
     background-color: #003e5a; /* Cor de fundo do botão */
     color: white;
     padding: 10px 20px; /* Reduzir o padding horizontal */
@@ -114,17 +116,26 @@ label {
     margin-top: 15px; /* Manter o espaçamento acima do botão */
 }
 
-.btn-entrar:hover {
+.btn-entrar:hover,
+.btn-cadastrar:hover {
     background-color: #00363d; /* Um tom mais escuro para o hover */
 }
 
-.signup-link {
+.signup-link,
+.login-link {
     margin-top: 20px;
     font-size: 14px;
     color: #004F5A; /* Nova cor do texto "Não tem uma conta?" */
     text-align: center; /* Centralizar o link de cadastro */
 }
 
-.signup-link a {
+.signup-link a,
+.login-link a {
     color: #004F5A; /* Cor do link Cadastre-se */
 }
+
+/* Estilos específicos para a caixa de cadastro (se precisar de algo diferente) */
+.cadastro-box {
+}
+    /* Você pode adicionar estilos específicos aqui, se necessário */
+
