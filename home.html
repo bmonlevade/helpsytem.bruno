@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stylelogin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="... integrity hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Home</title>
     <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
@@ -78,6 +80,7 @@
             padding-top: 80px; /* Adiciona padding para evitar que o conteúdo fique atrás do cabeçalho fixo (ajuste conforme a altura do header) */
             text-align: center; /* Centraliza o texto abaixo da logo */
             padding: 110px;
+            max-width: 600px; /* Define a largura máxima da área principal da página */
         }
 
         .forum-info {
@@ -156,6 +159,27 @@
             color: #ddd; /* A cor do texto quando ativo */
         }
 
+    /* Formatação da pesquisa */
+
+            /* Estilo para o input de pesquisa para torná-lo um container de posicionamento */
+        input[type="pesquisa"]#campoPesquisa {
+            position: relative;
+            padding-right: 25px; /* Adiciona um padding à direita para espaço do ícone */
+        }
+
+          /* Estilo para o ícone de limpar */
+        .clear-icon {
+            position: absolute;
+            /* Tentando posicionar no canto direito do input */
+            left: 72%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #002d42;
+            cursor: pointer;
+            display: none;
+            z-index: 3;
+        }
+
         .ultimas-postagens {
             padding: 20px;
             background-color: #fff;
@@ -227,12 +251,24 @@
             </div>
         </div>
 
+
+        <div class="input-group">
+            <div class="input-with-icon">
+                <i class="fa fa-search icon" aria-hidden="true"></i>
+                <input type="pesquisa" required placeholder="Encontre as perguntas já feitas" id="campoPesquisa">
+                <i class="fa fa-times-circle clear-icon"></i>
+                <button type="button" class="btn-pesquisa">Pesquisar</button>
+            </div>
+        </div>
+
         <div class="ultimas-postagens">
             <h2>Últimas Postagens</h2>
             <ul id="listaUltimasPostagens">
             </ul>
         </div>
     </div>
+
+    <script src="scriptPesquisa.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
