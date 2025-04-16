@@ -26,14 +26,30 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centraliza a logo inicialmente */
+            justify-content: space-between; /* Mantemos o space-between */
+        }
+
+        .home-icon-container {
+    display: flex;
+    align-items: center; /* Mantém o alinhamento interno dos itens do container do ícone */
+    align-self: flex-start; /* Alinha este container ao topo do header */
+    margin-right: 20px;
+   
+}
+
+
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centraliza a logo */
+            flex-grow: 1; /* Permite que o container da logo ocupe mais espaço */
         }
 
         .logo {
             max-height: 100px;
             width: auto;
             display: block;
-            margin: 0 auto; /* Centraliza a logo dentro do container */
         }
 
         .usuario-info-container {
@@ -53,6 +69,7 @@
             min-width: 80px;
             font-size: 0.9em;
             text-align: right;
+            margin-left: 15px; /* Espaço entre o ícone home e o info do usuário */
         }
 
         .content {
@@ -170,8 +187,17 @@
 </head>
 <body>
     <div class="header">
+        <div class="home-icon-container">
+            <a href="home.html" style="text-decoration: none; color: white;">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="fill: white; cursor: pointer; vertical-align: middle;">
+                    <path d="M10 20V14H14V20H19V12H22L12 3L2 12H5V20H10Z" fill="white"/>
+                </svg>
+            </a>
+        </div>
         <div class="logo-container">
-            <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+            <a href="home.html">
+                <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+            </a>
         </div>
         <div class="usuario-info-container">
             <span id="nomeUsuarioHeader" class="usuario-info">Nome Completo Do Usuário</span>
