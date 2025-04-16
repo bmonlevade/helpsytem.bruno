@@ -1,6 +1,6 @@
 // scriptCadastro.js
 
-Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+Parse.initialize("BAEFn0L1NuWmT3KSiQY7LZX0yFEA0lzQWgSnReeO", "TxYFJkMIjKNzhSujfhx17x1t47xqEEeM5Kdo4KTT");
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -47,22 +47,29 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const user = new Parse.User();
-        user.set("username", nomeUsuario);
-        user.set("email", email);
-        user.set("password", senha);
+        const Usuario = Parse.Object.extend("usuarios");
+        const novoUsuario = new Usuario();
+
+        novoUsuario.set("nome", nomeUsuario);
+        novoUsuario.set("email", email);
+        novoUsuario.set("senha", senha); // Salve a senha (considere a segurança: hashing no cliente ou Cloud Function)
 
         try {
-            const newUser = await user.signUp();
-            console.log('Usuário cadastrado com sucesso:', newUser);
+            const result = await novoUsuario.save();
+            console.log('Usuário cadastrado com sucesso na classe "usuarios":', result);
             localStorage.setItem('nomeUsuario', nomeUsuario);
             window.location.href = 'home.html'; // Redirecione para a página principal após o cadastro
         } catch (error) {
-            console.error('Erro ao cadastrar o usuário:', error);
-            if (error.code === 202) {
-                mensagemErro.textContent = 'Nome de usuário já existe.';
-            } else if (error.code === 203) {
-                mensagemErro.textContent = 'Email já existe.';
+            console.error('Erro ao cadastrar o usuário na classe "usuarios":', error);
+            // Adapte as mensagens de erro conforme as restrições da sua classe "usuarios"
+            if (error.message.includes("duplicate value")) {
+                if (error.message.includes("nome")) {
+                    mensagemErro.textContent = 'Nome de usuário já existe.';
+                } else if (error.message.includes("email")) {
+                    mensagemErro.textContent = 'Email já existe.';
+                } else {
+                    mensagemErro.textContent = 'Erro ao cadastrar. Valor duplicado encontrado.';
+                }
             } else {
                 mensagemErro.textContent = 'Erro ao cadastrar. Por favor, tente novamente.';
             }

@@ -188,11 +188,7 @@
             <div class="form-group">
                 <label for="setor">Categoria:</label>
                 <select id="setor" name="setor" required>
-                    <option value="" disabled selected>Selecione o setor</option>
-                    <option value="ti">TI</option>
-                    <option value="processos">Processos Internos</option>
-                    <option value="dp">Departamento Pessoal</option>
-                    <option value="happyhour">Happy Hour</option>
+                    <option value="" disabled selected>Selecione a categoria</option>
                 </select>
             </div>
             <div class="form-group">
@@ -213,6 +209,7 @@
         const nomeUsuarioHeader = document.getElementById('nomeUsuarioHeader');
         const form = document.getElementById('formSolicitacao');
         const cancelarButton = document.getElementById('cancelarSolicitacao');
+        const categoriaSelect = document.getElementById('setor');
 
         if (nomeUsuario && nomeUsuarioHeader) {
             nomeUsuarioHeader.textContent = nomeUsuario;
@@ -221,8 +218,37 @@
         }
 
         // Inicialize o Parse com suas chaves do Back4App
-        Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+        Parse.initialize("BAEFn0L1NuWmT3KSiQY7LZX0yFEA0lzQWgSnReeO", "TxYFJkMIjKNzhSujfhx17x1t47xqEEeM5Kdo4KTT");
         Parse.serverURL = 'https://parseapi.back4app.com/';
+
+        async function carregarCategorias() {
+            try {
+                const Solicitacao = Parse.Object.extend("solicitacao");
+                const query = new Parse.Query(Solicitacao);
+                const results = await query.find();
+                const categoriasEncontradas = new Set();
+
+                results.forEach(solicitacao => {
+                    const categoria = solicitacao.get("categoria");
+                    if (categoria) {
+                        categoriasEncontradas.add(categoria);
+                    }
+                });
+
+                categoriasEncontradas.forEach(categoria => {
+                    const option = document.createElement('option');
+                    option.value = categoria;
+                    option.textContent = categoria;
+                    categoriaSelect.appendChild(option);
+                });
+
+            } catch (error) {
+                console.error("Erro ao carregar categorias:", error);
+                alert("Erro ao carregar as categorias. Por favor, tente novamente.");
+            }
+        }
+
+        carregarCategorias(); // Chama a função para carregar as categorias ao carregar a página
 
         const enviarButton = form.querySelector('button[type="submit"]');
 

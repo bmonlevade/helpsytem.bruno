@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Senha digitada:', senhaDigitada);
 
             // Inicialize o Parse com suas Application ID e JavaScript Key do Back4App
-            Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+            Parse.initialize("BAEFn0L1NuWmT3KSiQY7LZX0yFEA0lzQWgSnReeO", "TxYFJkMIjKNzhSujfhx17x1t47xqEEeM5Kdo4KTT");
             Parse.serverURL = 'https://parseapi.back4app.com/';
 
             const Usuarios = Parse.Object.extend("usuarios");

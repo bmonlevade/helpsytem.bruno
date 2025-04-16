@@ -1,30 +1,30 @@
 // scriptCategorias.js
 
-Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
+Parse.initialize("BAEFn0L1NuWmT3KSiQY7LZX0yFEA0lzQWgSnReeO", "TxYFJkMIjKNzhSujfhx17x1t47xqEEeM5Kdo4KTT");
 Parse.serverURL = 'https://parseapi.back4app.com/';
 
 document.addEventListener('DOMContentLoaded', function() {
     const botoesCategoria = document.querySelectorAll('.categoria-button');
     const listaUltimasPostagens = document.getElementById('listaUltimasPostagens'); // Certifique-se de que este ID corresponde ao da sua lista
 
-    let categoriaAtiva = null; // Para rastrear a categoria ativa
+    let categoriaAtiva = 'todos'; // Inicializa com 'todos' para exibir todas as categorias
 
     async function buscarSolicitacoesPorCategoria(categoria) {
         console.log('Categoria para buscar:', categoria); // <--- LOG 1: Verificar a categoria que está sendo passada para a função
-    
+
         const Solicitacao = Parse.Object.extend("solicitacao");
         const query = new Parse.Query(Solicitacao);
-    
+
         if (categoria !== 'todos') {
             query.equalTo("categoria", categoria); // Usando o nome correto do campo
             console.log('Query com filtro de categoria:', categoria); // <--- LOG 2: Confirmar que o filtro está sendo aplicado
         } else {
             console.log('Query para todas as categorias'); // <--- LOG 3: Confirmar que não há filtro para "todos"
         }
-    
+
         query.descending("createdAt");
         query.limit(10); // Você pode ajustar o limite conforme necessário
-    
+
         try {
             const results = await query.find();
             console.log('Resultados da busca por categoria:', results); // <--- LOG 4: Ver os resultados da query
@@ -63,24 +63,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Remove a classe ativa de qualquer outro botão
             botoesCategoria.forEach(btn => {
-                if (btn !== this) {
-                    btn.classList.remove('categoria-button-ativo');
-                }
+                btn.classList.remove('categoria-button-ativo');
             });
 
-            // Adiciona/remove a classe ativa no botão clicado
-            if (this.classList.contains('categoria-button-ativo') && categoriaAtiva === categoriaSelecionada) {
-                this.classList.remove('categoria-button-ativo');
-                categoriaAtiva = null; // Desativa o filtro
-                buscarSolicitacoesPorCategoria('todos'); // Exibe todas as solicitações
-            } else {
-                this.classList.add('categoria-button-ativo');
-                categoriaAtiva = categoriaSelecionada;
-                buscarSolicitacoesPorCategoria(categoriaSelecionada); // Filtra pela categoria selecionada
-            }
+            // Adiciona a classe ativa no botão clicado
+            this.classList.add('categoria-button-ativo');
+            categoriaAtiva = categoriaSelecionada;
+            buscarSolicitacoesPorCategoria(categoriaSelecionada); // Filtra pela categoria selecionada
         });
     });
 
-    // Carregar todas as solicitações inicialmente
-    buscarSolicitacoesPorCategoria('todos');
+    // Carregar todas as solicitações inicialmente e marcar o botão "Todas" como ativo (se existir)
+    buscarSolicitacoesPorCategoria('todos').then(() => {
+        const botaoTodos = Array.from(botoesCategoria).find(botao => botao.dataset.categoria === 'todos');
+        if (botaoTodos) {
+            botaoTodos.classList.add('categoria-button-ativo');
+        } else if (botoesCategoria.length > 0) {
+            // Se não houver botão "Todas", marca o primeiro botão como ativo por padrão
+            botoesCategoria[0].classList.add('categoria-button-ativo');
+            categoriaAtiva = botoesCategoria[0].dataset.categoria;
+        }
+    });
 });
