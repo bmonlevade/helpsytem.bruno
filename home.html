@@ -3,13 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stylelogin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="... integrity hash ..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Home</title>
+    <link rel="stylesheet" href="style.css">
     <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
-    <script src="https://unpkg.com/parse@latest/dist/parse.min.js"></script>
-    <script src="scriptCategorias.js"></script>
-
     <style>
         body {
             font-family: sans-serif;
@@ -60,27 +56,49 @@
             margin: 0 auto; /* Centraliza a logo dentro do container */
         }
 
-        .usuario-destaque {
+        .usuario-container {
             position: absolute;
             top: 10px;
             right: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        .usuario-nome {
             font-weight: bold;
             color: #fff;
             padding: 8px;
             background-color: rgba(0, 0, 0, 0.5);
             border-radius: 5px;
             text-decoration: none;
+            margin-bottom: 5px; /* Espaço entre o nome e o botão */
         }
 
-        .usuario-destaque:hover {
+        .logout-button {
+            background: #003e5a;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 3px;
+        }
+
+        .logout-button:hover {
             opacity: 0.8;
         }
 
+.logout-icon {
+    width: 50px; /* Ajuste o tamanho conforme necessário */
+    height: 50px;
+    background-image: url('imagens/sair2.png'); /* Caminho para a sua imagem PNG transparente */
+    background-repeat: no-repeat;
+    background-size: contain; /* Ou outro valor conforme sua preferência */
+    display: inline-block;
+}
         .content {
             padding-top: 80px; /* Adiciona padding para evitar que o conteúdo fique atrás do cabeçalho fixo (ajuste conforme a altura do header) */
             text-align: center; /* Centraliza o texto abaixo da logo */
             padding: 110px;
-            max-width: 600px; /* Define a largura máxima da área principal da página */
         }
 
         .forum-info {
@@ -149,37 +167,6 @@
             background-color: #ccc;
         }
 
-        .categoria-button:active {
-            background-color: #003e5a; /* A cor quando ativo */
-            color: #ddd; /* A cor do texto quando ativo */
-        }
-
-        .categoria-button-ativo {
-            background-color: #003e5a; /* A cor quando ativo */
-            color: #ddd; /* A cor do texto quando ativo */
-        }
-
-    /* Formatação da pesquisa */
-
-            /* Estilo para o input de pesquisa para torná-lo um container de posicionamento */
-        input[type="pesquisa"]#campoPesquisa {
-            position: relative;
-            padding-right: 25px; /* Adiciona um padding à direita para espaço do ícone */
-        }
-
-          /* Estilo para o ícone de limpar */
-        .clear-icon {
-            position: absolute;
-            /* Tentando posicionar no canto direito do input */
-            left: 72%;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #002d42;
-            cursor: pointer;
-            display: none;
-            z-index: 3;
-        }
-
         .ultimas-postagens {
             padding: 20px;
             background-color: #fff;
@@ -213,7 +200,6 @@
         .ultimas-postagens a {
             text-decoration: none;
             color: #333;
-            text-decoration: underline;
         }
 
         .ultimas-postagens a:hover {
@@ -231,7 +217,12 @@
         <div class="logo-container">
             <img src="imagens/logo3.png" alt="Logo da Empresa" class="logo">
         </div>
-        <a id="linkPerfil" href="perfil.html" class="usuario-destaque"></a>
+        <div class="usuario-container">
+            <a id="linkPerfil" href="perfil.html" class="usuario-nome"></a>
+            <button id="logoutButton" class="logout-button">
+                <span class="logout-icon"></span>
+            </button>
+        </div>
     </div>
 
     <div class="content">
@@ -244,20 +235,10 @@
         <div class="categorias">
             <h2>Categorias</h2>
             <div class="categorias-buttons">
-                <a href="#" class="categoria-button" data-categoria="ti">TI</a>
-                <a href="#" class="categoria-button" data-categoria="processos">Processos Internos</a>
-                <a href="#" class="categoria-button" data-categoria="dp">Departamento Pessoal</a>
-                <a href="#" class="categoria-button" data-categoria="happyhour">Happy Hour</a>
-            </div>
-        </div>
-
-
-        <div class="input-group">
-            <div class="input-with-icon">
-                <i class="fa fa-search icon" aria-hidden="true"></i>
-                <input type="pesquisa" required placeholder="Encontre as perguntas já feitas" id="campoPesquisa">
-                <i class="fa fa-times-circle clear-icon"></i>
-                <button type="button" class="btn-pesquisa">Pesquisar</button>
+                <a href="#" class="categoria-button">TI</a>
+                <a href="#" class="categoria-button">Processos Internos</a>
+                <a href="#" class="categoria-button">DepartamentoPessoal</a>
+                <a href="#" class="categoria-button">Happy Hour</a>
             </div>
         </div>
 
@@ -268,18 +249,24 @@
         </div>
     </div>
 
-    <script src="scriptPesquisa.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const nomeUsuario = localStorage.getItem('nomeUsuario');
             const linkPerfil = document.getElementById('linkPerfil');
+            const logoutButton = document.getElementById('logoutButton');
             const listaUltimasPostagens = document.getElementById('listaUltimasPostagens');
 
             if (nomeUsuario && linkPerfil) {
                 linkPerfil.textContent = nomeUsuario;
                 linkPerfil.title = 'Perfil de ' + nomeUsuario;
             }
+
+            logoutButton.addEventListener('click', function() {
+                // Limpar informações de login (opcional, dependendo da sua implementação)
+                localStorage.removeItem('nomeUsuario');
+                // Redirecionar para a tela de login
+                window.location.href = 'login.html';
+            });
 
             Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
             Parse.serverURL = 'https://parseapi.back4app.com/';

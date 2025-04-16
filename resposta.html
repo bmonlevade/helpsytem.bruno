@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Responder Solicitação</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://npmcdn.com/parse/dist/parse.min.js"></script>
     <style>
-        body {
+    body {
             font-family: sans-serif;
             margin: 0;
             padding: 0;
@@ -26,14 +27,41 @@
             z-index: 100;
             display: flex;
             align-items: center;
-            justify-content: center; /* Centraliza a logo inicialmente */
+            justify-content: space-between; /* Espaço entre os elementos laterais */
+        }
+
+        .logo-container {
+            /* Largura flexível para ocupar o espaço central */
+            flex-grow: 1;
+            text-align: center; /* Centraliza a logo */
+        }
+
+        .logo {
+            max-height: 100px;
+            width: auto;
+            display: inline-block; /* Permite o text-align */
+        }
+
+        .home-button {
+            color: #fff;
+            font-size: 1.5em;
+            text-decoration: none;
+            /* Reintroduzindo o posicionamento absoluto */
+            position: absolute;
+            top: 10px; /* Ajuste conforme necessário */
+            right: 1900px; /* Ajuste conforme necessário */
+            z-index: 101; /* Garante que fique acima de outros elementos */
+        }
+
+        .home-button:hover {
+            color: #ccc;      /* Feedback visual ao passar o mouse */
         }
 
         .logo {
             max-height: 100px;
             width: auto;
             display: block;
-            margin: 0 auto; /* Centraliza a logo dentro do container */
+            margin: 0 auto;
         }
 
         .usuario-info-container {
@@ -56,7 +84,7 @@
         }
 
         .content {
-            margin-top: 180px; /* Aumentei o margin-top para dar espaço ao título e conteúdo da solicitação */
+            margin-top: 180px;
             padding: 20px;
         }
 
@@ -77,6 +105,89 @@
         .solicitacao-info p {
             margin-bottom: 0;
             color: #555;
+        }
+
+        .respostas-anteriores-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .respostas-anteriores-container h3 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .resposta-exibida {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .resposta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .resposta-header p.usuario {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0;
+        }
+
+        .resposta-actions a {
+            margin-left: 10px;
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.9em;
+            cursor: pointer;
+        }
+
+        .resposta-actions a:hover {
+            color: #0056b3;
+        }
+
+        .resposta-exibida p.conteudo {
+            color: #666;
+            margin-bottom: 0;
+        }
+
+        .edit-form {
+            margin-top: 10px;
+            display: none;
+        }
+
+        .edit-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1em;
+            min-height: 80px;
+            margin-bottom: 5px;
+        }
+
+        .edit-buttons button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
+            font-size: 0.9em;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .edit-buttons button:last-child {
+            background-color: #dc3545;
+        }
+
+        .edit-buttons button:hover {
+            opacity: 0.9;
         }
 
         .form-group {
@@ -102,67 +213,58 @@
             font-size: 1em;
         }
 
-        /* Aumentando a largura do campo de título */
-        .form-group input[type="text"]#titulo {
-            width: 100%; /* Ajuste este valor conforme a largura desejada */
-            /* Você também pode usar uma porcentagem diferente ou um valor fixo (em px, em, etc.) */
-        }
-
         .form-group textarea {
             min-height: 150px;
         }
 
-        /* Estilos para o placeholder do input de texto */
         input::placeholder {
             color: #003e5a;
             font-family: sans-serif;
         }
 
-        /* Estilos para o placeholder da textarea */
         textarea::placeholder {
             color: #003e5a;
             font-family: sans-serif;
         }
 
-        /* Prefixos para compatibilidade com navegadores (placeholder) */
-        input::-webkit-input-placeholder { /* Chrome/Safari/Opera */
+        input::-webkit-input-placeholder {
             color: #003e5a;
             font-family: sans-serif;
         }
-        textarea::-webkit-input-placeholder { /* Chrome/Safari/Opera */
-            color: #003e5a;
-            font-family: sans-serif;
-        }
-
-        input::-moz-placeholder { /* Firefox 19+ */
-            color: #003e5a;
-            font-family: sans-serif;
-            opacity: 1; /* Firefox padrão é 0.54 */
-        }
-        textarea::-moz-placeholder { /* Firefox 19+ */
-            color: #003e5a;
-            font-family: sans-serif;
-            opacity: 1; /* Firefox padrão é 0.54 */
-        }
-
-        input:-ms-input-placeholder { /* IE 10+ */
-            color: #003e5a;
-            font-family: sans-serif;
-        }
-        textarea:-ms-input-placeholder { /* IE 10+ */
+        textarea::-webkit-input-placeholder {
             color: #003e5a;
             font-family: sans-serif;
         }
 
-        input::-ms-placeholder { /* Microsoft Edge */
+        input::-moz-placeholder {
             color: #003e5a;
             font-family: sans-serif;
-            opacity: 1; /* Edge padrão é 0.6 */
+            opacity: 1;
         }
-        textarea::-ms-placeholder { /* Microsoft Edge */
+        textarea::-moz-placeholder {
             color: #003e5a;
             font-family: sans-serif;
-            opacity: 1; /* Edge padrão é 0.6 */
+            opacity: 1;
+        }
+
+        input:-ms-input-placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+        textarea:-ms-input-placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+        }
+
+        input::-ms-placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1;
+        }
+        textarea::-ms-placeholder {
+            color: #003e5a;
+            font-family: sans-serif;
+            opacity: 1;
         }
 
         .buttons-container {
@@ -189,18 +291,25 @@
 </head>
 <body>
     <div class="header">
+        <a href="home.html" class="home-button"><i class="fas fa-home"></i></a>
         <div class="logo-container">
-            <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+            <a href="home.html">
+                <img src="imagens/logo3.png" alt="Logo HelpAsk" class="logo">
+            </a>
         </div>
         <div class="usuario-info-container">
-            <span id="nomeUsuarioHeader" class="usuario-info">Nome Completo Do Usuário</span>
+            <span id="nomeUsuarioHeader" class="usuario-info">Carlos Pereira</span>
         </div>
     </div>
 
     <div class="content">
         <div class="solicitacao-info">
-            <h2 id="tituloSolicitacao">Título da Solicitação</h2>
-            <p id="conteudoSolicitacao">Conteúdo da solicitação selecionada.</p>
+            <h2 id="tituloSolicitacao">Salario</h2> <p id="conteudoSolicitacao">ghskdfhsgj</p> </div>
+
+        <div id="respostasAnterioresContainer" class="respostas-anteriores-container">
+            <h3>Respostas Anteriores:</h3>
+            <div id="listaRespostasAnteriores">
+                </div>
         </div>
 
         <h1>Responder Solicitação</h1>
@@ -211,14 +320,15 @@
             </div>
             <div class="buttons-container">
                 <button type="submit" class="button">Enviar</button>
-                <button type="button" class="button">Cancelar</button>
+                <button type="button" id="cancelarResposta" class="button">Cancelar</button>
                 <button type="reset" class="button">Limpar</button>
             </div>
         </form>
     </div>
+    </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+         document.addEventListener('DOMContentLoaded', function() {
             const nomeUsuarioHeader = document.getElementById('nomeUsuarioHeader');
             const tituloSolicitacaoElement = document.getElementById('tituloSolicitacao');
             const conteudoSolicitacaoElement = document.getElementById('conteudoSolicitacao');
@@ -226,22 +336,153 @@
             const respostaInput = document.getElementById('resposta');
             const urlParams = new URLSearchParams(window.location.search);
             const solicitacaoId = urlParams.get('id');
-            const nomeUsuario = localStorage.getItem('nomeUsuario'); // Supondo que o nome do usuário esteja armazenado no localStorage
+            const nomeUsuario = localStorage.getItem('nomeUsuario');
+            const listaRespostasAnteriores = document.getElementById('listaRespostasAnteriores');
+            const respostasAnterioresContainer = document.getElementById('respostasAnterioresContainer');
+            const cancelarRespostaButton = document.getElementById('cancelarResposta');
 
             if (nomeUsuario && nomeUsuarioHeader) {
                 nomeUsuarioHeader.textContent = nomeUsuario;
             } else if (nomeUsuarioHeader) {
-                nomeUsuarioHeader.textContent = 'Nome Completo Do Usuário'; // Fallback para teste
+                nomeUsuarioHeader.textContent = 'Nome Completo Do Usuário';
             }
 
-            // Inicialize o Parse com suas chaves do Back4App
             Parse.initialize("H3GRve4kYM8gv7XXVmXEFW6K7YLw6MIcieiU1OPp", "rcRV7nu2Y6PWMg0DboqC91Evb3z1WvXSA1iogMPD");
             Parse.serverURL = 'https://parseapi.back4app.com/';
+
+            async function buscarRespostasPorSolicitacaoId(solicitacaoId) {
+                const Resposta = Parse.Object.extend("Respostas");
+                const query = new Parse.Query(Resposta);
+                const Solicitacao = Parse.Object.extend("solicitacao");
+                const solicitacaoAlvo = Solicitacao.createWithoutData(solicitacaoId);
+                query.equalTo("solicitacao", solicitacaoAlvo);
+                query.ascending("createdAt");
+
+                try {
+                    const resultados = await query.find();
+                    if (resultados.length > 0) {
+                        respostasAnterioresContainer.style.display = 'block';
+                        listaRespostasAnteriores.innerHTML = '';
+                        resultados.forEach(resposta => {
+                            const respostaId = resposta.id;
+                            const nomeUsuarioResposta = resposta.get("usuario") || "Usuário Desconhecido";
+                            const conteudoResposta = resposta.get("conteudo_resposta");
+                            const currentUser = Parse.User.current();
+                            const podeEditarExcluir = currentUser && currentUser.get("nomeCompleto") === nomeUsuarioResposta;
+
+                            const respostaDiv = document.createElement('div');
+                            respostaDiv.classList.add('resposta-exibida');
+                            respostaDiv.dataset.respostaId = respostaId;
+
+                            let actionsHtml = '';
+                            if (podeEditarExcluir) {
+                                actionsHtml = `
+                                    <div class="resposta-actions">
+                                        <a href="#" class="edit-resposta"><i class="fas fa-edit"></i></a>
+                                        <a href="#" class="delete-resposta"><i class="fas fa-trash-alt"></i></a>
+                                    </div>
+                                `;
+                            }
+
+                            respostaDiv.innerHTML = `
+                                <div class="resposta-header">
+                                    <p class="usuario">${nomeUsuarioResposta}</p>
+                                    ${actionsHtml}
+                                </div>
+                                <p class="conteudo">${conteudoResposta}</p>
+                                <div class="edit-form">
+                                    <textarea class="edit-input">${conteudoResposta}</textarea>
+                                    <div class="edit-buttons">
+                                        <button class="save-edit-button">Salvar</button>
+                                        <button class="cancel-edit-button">Cancelar</button>
+                                    </div>
+                                </div>
+                            `;
+                            listaRespostasAnteriores.appendChild(respostaDiv);
+                            const editForm = respostaDiv.querySelector('.edit-form');
+                            if (editForm) {
+                                editForm.style.display = 'none';
+                            }
+                        });
+                        adicionarListenersAcoesRespostas();
+                    } else {
+                        respostasAnterioresContainer.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar respostas:", error);
+                }
+            }
+
+            function adicionarListenersAcoesRespostas() {
+                listaRespostasAnteriores.addEventListener('click', async function(event) {
+                    const target = event.target;
+                    const respostaDiv = target.closest('.resposta-exibida');
+                    if (!respostaDiv) return;
+
+                    const respostaId = respostaDiv.dataset.respostaId;
+                    const conteudoElement = respostaDiv.querySelector('.conteudo');
+                    const editForm = respostaDiv.querySelector('.edit-form');
+                    const editInput = editForm.querySelector('.edit-input');
+
+                    if (target.classList.contains('fa-edit')) {
+                        conteudoElement.style.display = 'none';
+                        editForm.style.display = 'block';
+                        editInput.value = conteudoElement.textContent;
+                    } else if (target.classList.contains('fa-trash-alt')) {
+                        if (confirm('Tem certeza que deseja excluir esta resposta?')) {
+                            await excluirResposta(respostaId, respostaDiv);
+                        }
+                    } else if (target.classList.contains('save-edit-button')) {
+                        const novoConteudo = editInput.value.trim();
+                        if (novoConteudo) {
+                            await salvarEdicaoResposta(respostaId, novoConteudo, conteudoElement, editForm);
+                        } else {
+                            alert('A resposta não pode estar vazia.');
+                        }
+                    } else if (target.classList.contains('cancel-edit-button')) {
+                        conteudoElement.style.display = 'block';
+                        editForm.style.display = 'none';
+                    }
+                });
+            }
+
+            async function excluirResposta(respostaId, respostaDiv) {
+                const Resposta = Parse.Object.extend("Respostas");
+                const query = new Parse.Query(Resposta);
+                try {
+                    const respostaParaExcluir = await query.get(respostaId);
+                    await respostaParaExcluir.destroy();
+                    listaRespostasAnteriores.removeChild(respostaDiv);
+                    alert('Resposta excluída com sucesso!');
+                } catch (error) {
+                    console.error("Erro ao excluir resposta:", error);
+                    alert('Erro ao excluir a resposta. Tente novamente.');
+                }
+            }
+
+            async function salvarEdicaoResposta(respostaId, novoConteudo, conteudoElement, editForm) {
+                const Resposta = Parse.Object.extend("Respostas");
+                const resposta = new Resposta();
+                resposta.set("objectId", respostaId);
+                resposta.set("conteudo_resposta", novoConteudo);
+
+                try {
+                    await resposta.save();
+                    conteudoElement.textContent = novoConteudo;
+                    conteudoElement.style.display = 'block';
+                    editForm.style.display = 'none';
+                    alert('Resposta editada com sucesso!');
+                } catch (error) {
+                    console.error("Erro ao salvar edição:", error);
+                    alert('Erro ao salvar a edição. Tente novamente.');
+                }
+            }
 
             async function buscarSolicitacaoPorId(id) {
                 if (!id) {
                     tituloSolicitacaoElement.textContent = 'ID da Solicitação Inválido';
                     conteudoSolicitacaoElement.textContent = 'Nenhuma solicitação foi selecionada corretamente.';
+                    respostasAnterioresContainer.style.display = 'none';
                     return;
                 }
 
@@ -253,90 +494,120 @@
                     if (solicitacao) {
                         tituloSolicitacaoElement.textContent = solicitacao.get("titulo");
                         conteudoSolicitacaoElement.textContent = solicitacao.get("solicitacao_conteudo");
+                        await buscarRespostasPorSolicitacaoId(id);
                     } else {
                         tituloSolicitacaoElement.textContent = 'Solicitação Não Encontrada';
                         conteudoSolicitacaoElement.textContent = 'Não foi possível encontrar a solicitação com o ID fornecido.';
+                        respostasAnterioresContainer.style.display = 'none';
                     }
                 } catch (error) {
                     console.error("Erro ao buscar a solicitação:", error);
                     tituloSolicitacaoElement.textContent = 'Erro ao Carregar Solicitação';
                     conteudoSolicitacaoElement.textContent = 'Ocorreu um erro ao buscar os detalhes da solicitação.';
+                    respostasAnterioresContainer.style.display = 'none';
                 }
             }
 
             buscarSolicitacaoPorId(solicitacaoId);
 
             formResposta.addEventListener('submit', async function(event) {
-            event.preventDefault();
-            console.log('Formulário de resposta enviado!');
+                event.preventDefault();
+                const conteudoResposta = respostaInput.value.trim();
 
-            const conteudoResposta = respostaInput.value.trim();
-
-            if (!conteudoResposta) {
-                alert('Por favor, digite sua resposta.');
-                return;
-            }
-
-            if (!solicitacaoId) {
-                alert('Erro: ID da solicitação não encontrado.');
-                return;
-            }
-
-            try {
-                const Resposta = Parse.Object.extend("Respostas");
-                const novaResposta = new Resposta();
-                novaResposta.set("conteudo_resposta", conteudoResposta);
-
-                const Solicitacao = Parse.Object.extend("solicitacao");
-                const solicitacaoAlvo = Solicitacao.createWithoutData(solicitacaoId);
-                novaResposta.set("solicitacao", solicitacaoAlvo);
-                novaResposta.set("usuario", nomeUsuario);
-
-                const respostaSalva = await novaResposta.save();
-                console.log('Resposta salva com sucesso:', respostaSalva);
-                alert('Resposta enviada com sucesso!');
-
-                const currentUser = Parse.User.current();
-                console.log('Current User:', currentUser);
-
-                if (currentUser) {
-                    try {
-                        const solicitacaoParaAtualizar = await solicitacaoAlvo.fetch();
-                        console.log('Solicitação buscada para atualização:', solicitacaoParaAtualizar);
-
-                        let hasnovaresposta = solicitacaoParaAtualizar.get("hasnovaresposta") || [];
-                        console.log('Valor inicial de hasnovaresposta:', hasnovaresposta);
-
-                        const criadorId = solicitacaoParaAtualizar.get("objectIdDoCriador");
-                        console.log('ID do Criador:', criadorId);
-
-                        if (criadorId && criadorId !== currentUser.id && !hasnovaresposta.includes(criadorId)) {
-                            hasnovaresposta.push(criadorId);
-                            console.log('ID do criador adicionado:', hasnovaresposta);
-                        }
-
-                        if (!hasnovaresposta.includes(currentUser.id)) {
-                            hasnovaresposta.push(currentUser.id);
-                            console.log('ID do respondente adicionado:', hasnovaresposta);
-                        }
-
-                        solicitacaoParaAtualizar.set("hasnovaresposta", hasnovaresposta);
-                        await solicitacaoParaAtualizar.save();
-                        console.log('Campo hasnovaresposta atualizado:', solicitacaoParaAtualizar.get("hasnovaresposta"));
-
-                    } catch (error) {
-                        console.error('Erro ao buscar solicitação para atualizar:', error);
-                    }
+                if (!conteudoResposta) {
+                    alert('Por favor, digite sua resposta.');
+                    return;
                 }
 
-                window.location.href = 'home.html';
+                if (!solicitacaoId) {
+                    alert('Erro: ID da solicitação não encontrado.');
+                    return;
+                }
 
-            } catch (error) {
-                console.error('Erro ao salvar a resposta:', error);
-                alert('Ocorreu um erro ao enviar sua resposta. Por favor, tente novamente.');
-            }
-        });
+                try {
+                    const Resposta = Parse.Object.extend("Respostas");
+                    const novaResposta = new Resposta();
+                    novaResposta.set("conteudo_resposta", conteudoResposta);
+
+                    const Solicitacao = Parse.Object.extend("solicitacao");
+                    const solicitacaoAlvo = Solicitacao.createWithoutData(solicitacaoId);
+                    novaResposta.set("solicitacao", solicitacaoAlvo);
+                    novaResposta.set("usuario", nomeUsuario);
+
+                    const respostaSalva = await novaResposta.save();
+                    console.log('Resposta salva com sucesso:', respostaSalva);
+                    alert('Resposta enviada com sucesso!');
+
+                    respostaInput.value = '';
+
+                    const respostaDiv = document.createElement('div');
+                    respostaDiv.classList.add('resposta-exibida');
+                    respostaDiv.dataset.respostaId = respostaSalva.id; // Adicionar o ID da nova resposta
+
+                    const actionsHtml = `
+                        <div class="resposta-actions">
+                            <a href="#" class="edit-resposta"><i class="fas fa-edit"></i></a>
+                            <a href="#" class="delete-resposta"><i class="fas fa-trash-alt"></i></a>
+                        </div>
+                    `;
+
+                    respostaDiv.innerHTML = `
+                        <div class="resposta-header">
+                            <p class="usuario">${nomeUsuario || "Você"}</p>
+                            ${actionsHtml}
+                        </div>
+                        <p class="conteudo">${conteudoResposta}</p>
+                        <div class="edit-form">
+                            <textarea class="edit-input">${conteudoResposta}</textarea>
+                            <div class="edit-buttons">
+                                <button class="save-edit-button">Salvar</button>
+                                <button class="cancel-edit-button">Cancelar</button>
+                            </div>
+                        </div>
+                    `;
+                    const editFormNovaResposta = respostaDiv.querySelector('.edit-form');
+                    if (editFormNovaResposta) {
+                        editFormNovaResposta.style.display = 'none';
+                    }
+
+                    listaRespostasAnteriores.appendChild(respostaDiv);
+                    respostasAnterioresContainer.style.display = 'block';
+                    adicionarListenersAcoesRespostas(); // Adicionar listeners para a nova resposta
+
+                    // Atualizar o campo hasnovaresposta
+                    const currentUser = Parse.User.current();
+                    if (currentUser) {
+                        try {
+                            const solicitacaoParaAtualizar = await solicitacaoAlvo.fetch();
+                            let hasnovaresposta = solicitacaoParaAtualizar.get("hasnovaresposta") || [];
+                            const criadorId = solicitacaoParaAtualizar.get("objectIdDoCriador");
+
+                            if (criadorId && criadorId !== currentUser.id && !hasnovaresposta.includes(criadorId)) {
+                                hasnovaresposta.push(criadorId);
+                            }
+                            if (!hasnovaresposta.includes(currentUser.id)) {
+                                hasnovaresposta.push(currentUser.id);
+                            }
+
+                            solicitacaoParaAtualizar.set("hasnovaresposta", hasnovaresposta);
+                            await solicitacaoParaAtualizar.save();
+                        } catch (error) {
+                            console.error('Erro ao buscar/atualizar solicitação:', error);
+                        }
+                    }
+
+                } catch (error) {
+                    console.error('Erro ao salvar a resposta:', error);
+                    alert('Ocorreu um erro ao enviar sua resposta. Por favor, tente novamente.');
+                }
+            });
+
+            cancelarRespostaButton.addEventListener('click', function() {
+                alert('Resposta cancelada.');
+                window.location.href = 'home.html';
+            });
         });
     </script>
 </body>
+</html>
 </html>

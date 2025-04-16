@@ -4,50 +4,90 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro</title>
-    <link rel="stylesheet" href="stylelogin.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script type="text/javascript" src="https://unpkg.com/parse/dist/parse.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .header {
+            background-color: #003e5a; /* Cor de fundo azul escuro */
+            color: #fff;
+            padding: 10px 0;
+            text-align: center; /* Centraliza o conteúdo dentro do header */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo-container {
+            display: inline-block; /* Permite centralizar o container da logo */
+        }
+
+        .logo {
+            max-height: 100px; /* Ajuste a altura máxima da logo conforme necessário */
+            width: auto;
+            display: block; /* Remove qualquer espaçamento inline */
+            margin: 0 auto; /* Centraliza a logo dentro do container */
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding-top: 60px; /* Ajuste para evitar sobreposição com o header fixo */
+        }
+
+        .cadastro-box {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .cadastro-box h1 {
+            margin-bottom: 20px;
+            color: #003e5a;
+        }
+
+        .cadastro-box p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .cadastro-box a {
+            color: #003e5a;
+            text-decoration: none;
+        }
+
+        .cadastro-box a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="login-box cadastro-box">
-            <div class="logo-container">
-                <img src="imagens/logo2.png" alt="Logo do Fórum">
-            </div>
-            <form id="cadastroForm">
-                <div class="input-group">
-                    <label for="nomeUsuarioCadastro"></label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-user icon"></i>
-                        <input type="text" id="nomeUsuarioCadastro" name="nomeUsuarioCadastro" required placeholder="Nome de usuário">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="novoUsuario"></label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-envelope icon"></i>
-                        <input type="email" id="novoUsuario" name="novoUsuario" required placeholder="Seu email">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="novaSenha"></label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock icon"></i>
-                        <input type="password" id="novaSenha" name="novaSenha" required placeholder="Sua senha">
-                    </div>
-                </div>
-                <div class="input-group">
-                    <label for="confirmarSenha"></label>
-                    <div class="input-with-icon">
-                        <i class="fas fa-lock icon"></i>
-                        <input type="password" id="confirmarSenha" name="confirmarSenha" required placeholder="Confirmar sua senha">
-                    </div>
-                </div>
-                <button type="submit" class="btn-cadastrar">Cadastrar</button>
-            </form>
-            <p class="login-link">Já tem conta? <a href="login.html">Faça login</a>.</p>
+    <div class="header">
+        <div class="logo-container">
+            <img src="imagens/logo3.png" alt="Logo da Empresa" class="logo">
         </div>
     </div>
-    <script src="scriptCadastro.js"></script>
-    </body>
+
+    <div class="container">
+        <div class="cadastro-box">
+            <h1>Cadastro</h1>
+            <p>Para se cadastrar, por favor, entre em contato com o suporte:</p>
+            <p>Email: <a href="mailto:gustavo.izidro@specialisterne.com">gustavo.izidro@specialisterne.com</a></p>
+            <p><a href="login.html">Voltar para o Login</a></p>
+        </div>
+    </div>
+</body>
 </html>
